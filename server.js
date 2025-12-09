@@ -1,40 +1,59 @@
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PRINTIFY_API_KEY = process.env.PRINTIFY_API_KEY;
-const SHOP_ID = process.env.SHOP_ID;
+const API_KEY = process.env.PRINTIFY_API_KEY;
 
-app.get("/", (req, res) => {
-  res.send("Printify Backend Running");
-});
+// Auto-detect store ID from Printify
+async function getStoreId() {
+  const res = await fetch("https://api.printify.com/v1/shops.json", {
+    headers: { Authorization: `Bearer ${API_KEY}` }
+  });
 
-app.post("/create-order", async (req, res) => {
+  const stores = await res.json();
+  if (stores.length === 0) throw new Error("No stores found in Printify");
+  return stores[0].id; // Automatically use the first store
+}
+
+// GET all products
+app.get("/api/products", async (req, res) => {
   try {
-    const orderData = req.body;
+    const storeId = await getStoreId();
 
-    const response = await fetch(
-      `https://api.printify.com/v1/shops/${SHOP_ID}/orders.json`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${PRINTIFY_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(orderData)
-      }
-    );
+    const url = `https://api.printify.com/v1/shops/${storeId}/products.json`;
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
 
     const data = await response.json();
     res.json(data);
-
   } catch (err) {
-    res.status(500).json({ error: "Order creation failed", details: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(10000, () => console.log("Server running on port 10000"));
+// GET single product
+app.get("/api/products/:id", async (req, res) => {
+  try {
+    const storeId = await getStoreId();
+
+    const url = `https://api.printify.com/v1/shops/${storeId}/products/${req.params.id}.json`;
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(10000, () => console.log("Backend running on port 10000"));
