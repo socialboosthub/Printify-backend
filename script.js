@@ -1,5 +1,5 @@
 const SHOP_ID = "YOUR_SHOP_ID";
-const BACKEND = "https://your-render-server.onrender.com";
+const BACKEND = "https://printify-backend-400k.onrender.com";
 
 
 // ---------------- LOAD PRODUCTS ----------------
