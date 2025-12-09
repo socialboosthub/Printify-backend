@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+}
+
+header {
+  background: black;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 10px;
+  color: white;
+}
+
+.hero {
+  padding: 50px;
+  text-align: center;
+}
+
+.btn {
+  background: black;
+  color: white;
+  padding: 10px 20px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.checkout-form {
+  max-width: 400px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-form input {
+  padding: 10px;
+  margin: 10px 0;
+}
