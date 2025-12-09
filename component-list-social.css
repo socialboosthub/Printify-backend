@@ -1,0 +1,71 @@
+.list-social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 749px) {
+  .list-social {
+    justify-content: center;
+  }
+}
+
+.list-social__item .icon {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.list-social__link {
+  align-items: center;
+  display: flex;
+  padding: 1.3rem;
+  color: rgb(var(--color-foreground));
+}
+
+.list-social__link:hover .icon {
+  transform: scale(var(--animation-scale));
+}
+
+.list-social__item {
+  transition: transform 200ms ease;
+}
+
+.list-social__item:hover {
+  transform: translateY(-2px);
+}
+
+.list-social__item:has(.icon-facebook):hover {
+  background: #3A5A99;
+}
+
+.list-social__item:has(.icon-youtube):hover {
+  background: #E52D27;
+}
+
+.list-social__item:has(.icon-twitter):hover {
+  background: #020304;
+}
+
+.list-social__item:has(.icon-instagram):hover {
+  background: #e1306c;
+}
+
+.list-social__item:has(.icon-tiktok):hover {
+  background: #010101;
+}
+
+.list-social__item:has(.icon-pinterest):hover {
+  background: #bd081c;
+}
+
+.list-social__item:has(.icon-snapchat):hover {
+  background: #fffc00;
+}
+
+.list-social__item:has(.icon-tumblr):hover {
+  background: #35465d;
+}
+
+.list-social__item:has(.icon-vimeo):hover {
+  background: #1ab7ea;
+}
