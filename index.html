@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shop | Printify Store</title>
+  <title>Products</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>Welcome to My Printify Store</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="checkout.html">Checkout</a>
-  </nav>
-</header>
+<h1>Our Products</h1>
+<div id="product-list" class="grid"></div>
 
-<section class="hero">
-  <h2>High Quality Print-on-Demand Products</h2>
-  <p>Printed and fulfilled automatically by Printify</p>
-  <a class="btn" href="products.html">Shop Now</a>
-</section>
+<script>
+const BACKEND = "https://printify-backend-400k.onrender.com";
+
+async function loadProducts() {
+  const res = await fetch(`${BACKEND}/api/products`);
+  const json = await res.json();
+
+  const products = json.data; // correct structure
+  const container = document.getElementById("product-list");
+
+  products.forEach(p => {
+    container.innerHTML += `
+      <div class="product">
+        <h3>${p.title}</h3>
+        <a href="product.html?id=${p.id}">View Product</a>
+      </div>
+    `;
+  });
+}
+
+loadProducts();
+</script>
 
 </body>
 </html>
