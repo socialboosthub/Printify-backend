@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Checkout | Printify Store</title>
+  <title>Checkout</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<header>
-  <h1>Checkout</h1>
-</header>
 
-<form id="checkoutForm" class="checkout-form">
-  <input type="text" name="name" placeholder="Full Name" required>
-  <input type="text" name="address" placeholder="Address" required>
-  <input type="text" name="city" placeholder="City" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <button type="submit">Place Order</button>
-</form>
+<h1>Checkout</h1>
+<div id="status"></div>
 
-<script src="script.js"></script>
 <script>
+const BACKEND = "https://printify-backend-400k.onrender.com";
+
+async function checkout() {
+  const url = new URL(window.location.href);
+  const productId = url.searchParams.get("id");
+
+  const res = await fetch(`${BACKEND}/create-order`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      product_id: productId,
+      variant_id: 2766, // default
+      quantity: 1
+    })
+  });
+
+  const json = await res.json();
+  document.getElementById("status").innerHTML = JSON.stringify(json, null, 2);
+}
+
 checkout();
 </script>
+
 </body>
 </html>
