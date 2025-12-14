@@ -1,1 +1,2 @@
-baseurl: /Printify-backend
+title: My Project Site
+baseurl: "/Printify-backend" # The subpath of your site, e.g. /blog
